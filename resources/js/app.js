@@ -1,0 +1,1 @@
+console.log('Hello this is to check Laravel-Mix')

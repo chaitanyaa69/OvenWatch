@@ -1,0 +1,25 @@
+{
+  "name": "pizzalicious",
+  "version": "1.0.0",
+  "description": "A pizza ordering/tracking web application",
+  "main": "index.js",
+  "scripts": {
+    "serve":"node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [
+    "mernproj",
+    "project",
+    "mern"
+  ],
+  "author": "chaitanya",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "express-ejs-layouts": "^2.5.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}

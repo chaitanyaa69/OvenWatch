@@ -8,6 +8,7 @@ const path=require('path');
 const session = require('express-session')
 const flash=require('express-flash')
 const MongoDbStore=require('connect-mongo')(session)
+const passport=require('passport')
 
 const PORT= process.env.PORT || 3000;
 //databse conncection
@@ -26,6 +27,9 @@ connection.once('open', () => {
     console.log('Connected to the DataBase');
 });
 
+
+//passport config
+
 const mongoStore = new MongoDbStore({
     mongooseConnection : connection,
     collection: 'sessions',
@@ -41,9 +45,16 @@ app.use(session({
     saveUninitialized: false,
     cookie: { maxAge: 1000 * 60 * 60 * 24 } //24h 
 }))
+//passport vonfig
+const passportInit = require('./app/config/passport')
+passportInit(passport);
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(flash())
+
 app.use(express.static('public'))
+app.use(express.urlencoded({extended : false}))
 app.use(express.json())
 
 //global middleware

@@ -1,5 +1,10 @@
 const Order = require('../../../models/order');
 
+function renderItems(items) {
+  return Object.values(items).map(menuItem => {
+    return `<p>${menuItem.item.name} - ${menuItem.qty} pcs</p>`;
+  }).join('');
+}
 function orderController() {
   return {
     async index(req, res) {
@@ -9,7 +14,7 @@ function orderController() {
         if (req.xhr) {
           return res.json(orders);
         } else {
-          return res.render('admin/orders', { orders });  // Pass orders to the view
+          return res.render('admin/orders', { orders, renderItems });  // Pass orders to the view
         }
       } catch (err) {
         console.error(err);

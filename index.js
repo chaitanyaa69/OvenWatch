@@ -22,7 +22,7 @@ const PORT= process.env.PORT || 3000;
 
 const url = 'mongodb://localhost/pizza';
 
-mongoose.connect(url);
+mongoose.connect(process.env.MONGO_CONNECTION_URL);
 
 const connection = mongoose.connection;
 
@@ -77,6 +77,9 @@ app.set('views',path.join(__dirname,'/resources/views'))
 app.set('view engine','ejs');
 
 require('./routes/web')(app);
+app.use((req, res) => {
+    res.status(404).render('errors/404')
+})
 const server = app.listen(PORT,()=>{
     console.log(`Server running on port ${PORT}`)
 });

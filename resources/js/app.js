@@ -75,7 +75,6 @@ updateStatus(order);
 //socket
 
 let socket = io()
-initAdmin(socket);
 
 // Join
 if(order) {

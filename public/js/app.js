@@ -31661,7 +31661,6 @@ updateStatus(order);
 //socket
 
 var socket = io();
-Object(_admin__WEBPACK_IMPORTED_MODULE_2__["initAdmin"])(socket);
 
 // Join
 if (order) {

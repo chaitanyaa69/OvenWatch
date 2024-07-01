@@ -1,5 +1,5 @@
 const Order = require('../../../models/order');
-
+const moment = require('moment');
 function renderItems(items) {
   let parsedItems = Object.values(items)
   return parsedItems.map((menuItem) => {
@@ -17,7 +17,7 @@ function orderController() {
         if (req.xhr) {
           return res.json(orders);
         } else {
-          return res.render('admin/orders', { orders, renderItems });  // Pass orders to the view
+          return res.render('admin/orders', { orders, renderItems,moment });  // Pass orders to the view
         }
       } catch (err) {
         console.error(err);

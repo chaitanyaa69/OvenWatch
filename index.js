@@ -9,6 +9,13 @@ const session = require('express-session')
 const flash=require('express-flash')
 const MongoDbStore=require('connect-mongo')(session)
 const passport=require('passport')
+const EventEmitter = require('events');
+
+// Other middleware and routes...
+
+// Set up EventEmitter
+const eventEmitter = new EventEmitter();
+app.set('eventEmitter', eventEmitter);
 
 const PORT= process.env.PORT || 3000;
 //databse conncection
@@ -70,6 +77,22 @@ app.set('views',path.join(__dirname,'/resources/views'))
 app.set('view engine','ejs');
 
 require('./routes/web')(app);
-app.listen(PORT,()=>{
+const server = app.listen(PORT,()=>{
     console.log(`Server running on port ${PORT}`)
 });
+
+const io = require('socket.io')(server)
+io.on('connection', (socket) => {
+      // Join
+      socket.on('join', (orderId) => {
+        socket.join(orderId)
+      })
+})
+
+eventEmitter.on('orderUpdated', (data) => {
+    io.to(`order_${data.id}`).emit('orderUpdated', data)
+})
+
+eventEmitter.on('orderPlaced', (data) => {
+    io.to('adminRoom').emit('orderPlaced', data)
+})
